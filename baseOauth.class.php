@@ -76,7 +76,6 @@ class BaseOauth {
 			$url .= '&format=json&oauth_version=2.a&scope=all&';//固定值
 		}
 		$url .= http_build_query($aParams);
-		echo $url;
 		$handle = fopen($url,"rb");
 		$content = "";
 		while (!feof($handle)) {
