@@ -87,15 +87,12 @@ class BaseOauth {
 	}
 
 	function methodPost($url, $param){
-		$context = array(
-				'http'=>array(
-						'method'=>'POST',
-						'header'=>'Content-type: application/x-www-form-urlencoded'."\r\n".
-						'User-Agent : Sae T OAuth2 v0.1'."\r\n",
-						'content'=>'mypost='.$param)
-		);
-		$stream_context = stream_context_create($context);
-		$data = file_get_contents($url,FALSE,$stream_context);
+		$curl = $curl_init($curl);
+		curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);//返回内容
+		curl_setopt($curl, CURLOPT_POSTFIELDS, $param);
+		curl_setopt($curl, CURLOPT_TIMEOUT, 5);
+		$data = curl_exec($curl);
+		curl_close($curl);
 		$res = json_decode($data,true);
 		return $res;
 	}
